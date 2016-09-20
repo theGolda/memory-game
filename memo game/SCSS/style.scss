@@ -1,0 +1,405 @@
+* {
+	box-sizing: border-box;
+}
+
+$primary: rgb(243,112,33);
+$secondary: rgb(255, 214, 123);
+
+.mg-board {
+	display: flex;
+	flex-flow: row wrap;
+	align-items: flex-end;
+	font-family: 'Nunito', sans-serif;
+}
+.mg-header, .mg-main, .mg-footer {
+	flex: 0 0 100%;
+}
+/******************************************
+*
+* HEADER
+*
+******************************************/
+.mg-header {
+	padding: .5rem;
+}
+
+/******************************************
+* TIMER
+******************************************/
+.mg-timer{
+	display: flex;
+	justify-content: space-between;
+	text-align: center;
+}
+.mg-timer__outter {
+	flex: 0 0 48%;
+	background: $primary;
+	padding: .5rem;
+	border-radius: 12px;
+	color: #fff;
+	line-height: 1.8rem;
+}
+.mg-timer__inner {
+	background: $secondary;
+	border-radius: 8px;
+	color: darken($primary, 15%);
+	font-weight: bold;
+	font-size: 2.4rem;
+	line-height: 3.2rem;
+}
+
+/******************************************
+* POINTS
+******************************************/
+.mg-points{
+	text-align: center;
+	font-size: 1.8rem;
+	margin-top: 20px;
+}
+
+/******************************************
+*
+* CARDS
+*
+******************************************/
+.mg-main {
+	display:flex;
+	flex-flow: row wrap;
+	justify-content: space-between;
+	padding: .5rem;
+}
+.mg-card {
+	flex: 0 0 25%;
+	position: relative;
+
+	&.flip {
+
+		.mg-card__front, .mg-card__back {
+			transition: 0.8s;
+			backface-visibility: hidden;
+		}
+
+		.mg-card__back {
+			position: absolute;
+			transform: rotateY(0deg);
+			width: 100%;
+			top: 0;
+			left: 0;
+		}
+
+		.mg-card__front {
+			transform: rotateY(180deg);
+		}
+
+	}
+
+	&.post-flip {
+
+		.mg-card__front {
+			transform: rotateY(0deg);
+		}
+
+		.mg-card__back {
+			transform: rotateY(180deg);
+		}
+
+	}
+	
+	&.open {
+		perspective: 650px;
+
+		.mg-card__front, .mg-card__back {
+			transition: 0.6s;
+		}
+
+		.mg-card__front {
+		    box-shadow: inset 6px 2px 4px rgba(0,0,0,0.4);
+
+		    img {
+		    	position: relative;
+		    	z-index: -1;
+		    }
+		}
+
+		.mg-card__back {
+			position: absolute;
+			width: 100%;
+			top: 0;
+			left: 0;
+			transform-origin: 5px;
+		}
+
+	}
+
+	&.post-open {
+
+		.mg-card__back {
+			transform: rotateY(-90deg);
+		}
+	}
+	img {
+		//inline elements are not treated as flex-items, also if left as display inline it adds 4px bottom margin
+		display: block;
+		width: 100%;
+		border: 0;
+		padding: 0;
+	}
+
+	&.spin {
+
+		.mg-card__front, .mg-card__back {
+			transition: 0.9s;
+		}
+
+		.mg-card__back {
+			position: absolute;
+			width: 100%;
+			top: 0;
+			left: 0;
+		}
+	}
+
+	&.post-spin {
+
+		.mg-card__back {
+			transform: rotate(980deg);
+			opacity: 0;
+		}
+
+	}
+	
+}
+
+.mg-card--circle {
+	border-radius: 50%;
+	overflow: hidden;
+}
+
+/******************************************
+*
+* FOOTER
+*
+******************************************/
+.mg-footer {
+	text-align: center;
+	padding: 10px;
+}
+
+.mg-hurry {
+	font-size: 2.4rem;
+	animation: hurry 1000ms infinite;
+	position:relative;
+	z-index: -3;
+}
+
+@keyframes hurry {
+	0% {color: $primary; transform: rotate(-18deg);}
+	50% {color: $secondary; transform: rotate(18deg);}
+	100% {color: $primary; transform: rotate(-18deg);}
+}
+
+
+/******************************************
+*
+* BUTTONS
+*
+******************************************/
+.mg-btn {
+	text-align: center;
+	border: none;
+	outline: none;
+	cursor: pointer;
+	font-family: 'Nunito', sans-serif;	
+}
+
+.mg-btn--primary {
+	background: $primary;
+	color: white;
+	&:hover {
+		background: lighten($primary, 5%);
+	}
+}
+
+.mg-btn--secondary {
+	background: $secondary;
+	color: darken($primary, 15%);
+	&:hover {
+		background: lighten($secondary, 10%);
+	}
+}
+
+.mg-btn--lg {
+	padding: .5rem;
+	min-width: 10rem;
+	border-radius: 12px;
+	font-size: 1.4rem;
+}
+
+.mg-btn--sm {
+	padding: .3rem;
+	min-width: 7rem;
+	border-radius: 8px;
+	font-size: 1.2rem;
+}
+
+/******************************************
+*
+* POPUPS
+*
+******************************************/
+.mg-overlay {
+	position:absolute;
+	top:0;
+	left:0;
+	width: 100%;
+	height: 100%;
+	z-index: 99;
+}
+
+.mg-overlay--dark {
+	background: rgba(0, 0, 0, .7);
+}
+
+.mg-overlay--light {
+	background: rgba(255, 255, 255, .7);
+}
+
+.mg-fade--in {
+	animation: fadein 700ms;	
+}
+
+@keyframes fadein {
+	0% {opacity: 0}
+	100% {opacity: 1}
+}
+
+.mg-popup {
+	position: fixed;
+	font-family: 'Nunito', sans-serif;
+	top: 50%;
+	left: 50%;
+	z-index: 100;
+	padding: 1rem;
+	text-align: center;
+	width: 85%;
+	border-radius: 12px;
+	transform: translate(-50%, -50%);
+	box-shadow: .2rem .2rem .8rem rgba(0,0,0,.6);
+}
+
+.mg-popup--light {
+	background: rgba(255, 255,255 , 1);
+	color: $primary;
+	.mg-special {
+		font-weight: bold;
+		color: lighten($primary, 15%);
+	}
+}
+
+.mg-popup--dark {
+	background: rgba(0, 0, 0, 1);
+	color: $secondary;
+	.mg-special {
+		font-weight: bold;
+		color: lighten($secondary, 15%);
+	}
+}
+
+.mg-slide--down {
+	animation: slidedown 700ms;
+}
+
+@keyframes slidedown {
+	0% {transform: translate(-50%, -200%)}
+	100% { transform: translate(-50%, -50%)}
+}
+
+.mg-slide--up {
+	animation: slideup 700ms;
+}
+
+@keyframes slideup {
+	0% {transform: translate(-50%, 200%)}
+	100% { transform: translate(-50%, -50%)}
+}
+
+.mg-slide--left {
+	animation: slideleft 700ms;
+}
+
+@keyframes slideleft {
+	0% {transform: translate(-200%, -50%)}
+	100% { transform: translate(-50%, -50%)}
+}
+
+.mg-slide--right {
+	animation: slideright 700ms;
+}
+
+@keyframes slideright {
+	0% {transform: translate(200%, -50%)}
+	100% { transform: translate(-50%, -50%)}
+}
+
+.mg-close {
+	outline: none;
+	height: 2rem;
+	width: 2rem;
+	border: none;
+	background: none;
+	cursor: pointer;
+	position: absolute;
+	top: .5rem;
+	right: .5rem;
+	svg {
+		fill: $primary;
+	}
+	&:hover {
+		svg {
+			fill: lighten($primary, 5%)
+		}
+	}
+}
+/******************************************
+*
+* MEDIA QUERIES
+*
+******************************************/
+@media screen and (min-width: 480px) {
+	.mg-header {
+		display: flex;
+		flex-flow: row wrap;		
+	}
+	.mg-timer {
+		flex: 0 0 50%;
+		order: 2;
+		justify-content: flex-end;
+	}
+	.mg-timer__outter {
+		max-width: 150px;
+		&:first-of-type{
+			margin-right: .5rem;
+		}
+	}
+	.mg-points {
+		flex: 0 0 50%;
+		margin-top: 0;
+		line-height: 95px;
+		order: 1;
+		text-align: left;
+	}
+}
+/******************************************
+*
+* COLUMN GRID
+*
+******************************************/
+$i: 12;
+
+@while $i > 0 {
+	.mg-col-#{$i} {
+		flex: 0 0 calc(100%/#{$i} - .5rem);
+		margin: .5rem 0;
+	}
+	$i: $i - 1;	
+}
