@@ -67,8 +67,6 @@ for( var i = 0; i < links.length; i++ ) {
 var myBoard = new MemoryGame({
 
 	wrapper: 'memo-example',
-	images: ['http://news.nationalgeographic.com/news/2007/04/images/070412-square-nebula.jpg', 'https://upload.wikimedia.org/wikipedia/commons/c/c6/Sierpinski_square.jpg', 'https://pbs.twimg.com/profile_images/553572195390091265/IeHWVVMX.png'],
-	backImage: 'http://vpx.pl/i/2016/08/11/cardback.jpg',
 	responsive: [
 		{
 			breakpoint: 768,
